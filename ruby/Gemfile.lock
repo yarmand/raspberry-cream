@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    listen (0.7.3)
+    rack (1.5.2)
+    rack-protection (1.5.0)
+      rack
+    rb-fsevent (0.9.3)
+    rerun (0.8.0)
+      listen
+    sinatra (1.3.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.3)
+      tilt (~> 1.3, >= 1.3.3)
+    tilt (1.3.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rb-fsevent (~> 0.9)
+  rerun
+  sinatra
