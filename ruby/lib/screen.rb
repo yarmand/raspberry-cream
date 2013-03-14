@@ -19,7 +19,7 @@ class Screen
   def initialize(msg, modules)
     self.id = (0...20).map{ ('a'..'z').to_a[rand(26)] }.join
     self.message = msg
-    self.screen_module = modules.select { |m| m.can_display?(msg) }
+    self.screen_module = modules.select { |m| m.can_display?(msg) }.first
     self.module_data = screen_module.data(message)
     self.priority = screen_module.priority
   end

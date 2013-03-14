@@ -3,8 +3,15 @@ require 'scheduler'
 
 class YammerPoller
   POLL_INTERVAL = 20 # seconds
+  MODULES_DIR = 'lib/screen_modules'
 
-  def initialize
+  def initialize(scheduler)
+    @scheduler = scheduler
+
+    # Load the list of modules
+    @modules = load_modules_from_disk
+    puts "Loaded modules #{@modules.inspect}"
+
     if File.exists?('token')
       @auth_token = File.read('token')
 
@@ -18,6 +25,16 @@ class YammerPoller
     !!@auth_token
   end
 
+  def load_modules_from_disk
+    Dir.glob(MODULES_DIR + "/*.rb").map do |file|
+      puts file
+      
+      puts File.basename(file, '.rb')
+      require "screen_modules/#{File.basename(file, '.rb')}"
+      Module.const_get(File.basename(file, '.rb').capitalize)
+    end
+  end
+
   def poll
     raise "Not Authorised" unless authorised?
     loop do 
@@ -29,6 +46,8 @@ class YammerPoller
         messages = json['messages']
         messages.each do |msg|
           puts "#{msg['id']} => #{msg['body']['plain']}"
+          screen = Screen.new(msg, @modules)
+          @scheduler.add_screen(screen)
         end
         #pp json
 

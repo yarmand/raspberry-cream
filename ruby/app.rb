@@ -4,6 +4,7 @@ require 'yaml'
 
 $LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/lib"))
 require 'yammer_poller'
+require 'scheduler'
 Bundler.require
 
 configure do
@@ -18,7 +19,9 @@ configure do
     provider :yammer, settings.client_id, settings.client_secret
   end
 
-  poller = YammerPoller.new
+  scheduler = Scheduler.new#.start
+
+  poller = YammerPoller.new(scheduler)
   if poller.authorised?
     puts "Hooray!  Authorised!"
     POLLING_THREAD = Thread.new { poller.poll }

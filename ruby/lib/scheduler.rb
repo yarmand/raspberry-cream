@@ -15,7 +15,7 @@ class Scheduler
   #         - messages_list_size = 10
   #         - message_display_delai = {normal: 20, priority: 40}
   def initialize(config=DEFAULT_CONFIG)
-    self.screen_list = ScreenList.new(config[messages_list_size])
+    self.screen_list = ScreenList.new(config[:messages_list_size])
   end
 
   def add_screen(screen)

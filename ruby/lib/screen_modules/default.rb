@@ -1,5 +1,5 @@
-
-class ScreenModules::Default
+class Default
+  class << self
   def can_display?(message)
     true 
   end
@@ -20,4 +20,5 @@ class ScreenModules::Default
     true
   end
 
+end
 end
