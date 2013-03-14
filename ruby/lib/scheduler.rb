@@ -1,56 +1,22 @@
+require 'screen'
 
 class Scheduler
-  Cell = Struct.new(:screen, :next)
 
   EMPTY_LIST_DELAY = 10
 
-  attr_accessor :browser_adapter
+  attr_accessor :browser_adapter, :screen_list
 
-  /**
-    * config: is a hach containing ...
-    *         - messages_list_size = 10
-    *         - message_display_delai = {normal: 20, priority: 40}
-    */
+/*
+ * config: is a hach containing 
+ *         - messages_list_size = 10
+ *         - message_display_delai = {normal: 20, priority: 40}
+ */
   def initialize(config)
-    @current = nil
-    @first = nil 
-    @size = 0
-    @config = config
-    @max_size = config[:messages_list_size]
+    self.screen_list = ScreenList.new(config[messages_list_size])
   end
 
   def add_screen(screen)
-    if @first.nil?
-      @first = Cell(screen,nil)
-      @curent = @first
-    else
-      @first = Cell.new(screen, @first)
-    end
-    @size += 1
-  end
-
-  def normalize(list)
-    return nil if list.nil?
-    cell = list
-    until cell.nil? || @size <= @max_size do
-      return cell if cell.screen.keep_it?
-      cell = cell.next
-    end
-    cell.next = normalize cell.next unless cell.nil?
-    cell
-  end
-
-  def next_screen
-    curent = curent.next
-    Thread.new {@first = normalize(@first)} if current.nil?
-    current.screen
-  end
-
-  def current
-    if @current.nil?
-      return Cell.new(nil,@first)
-    end
-    @current
+    screen_list.add(screen)
   end
 
   def start
