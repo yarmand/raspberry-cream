@@ -49,5 +49,5 @@ end
 get '/display/:module/:screen_id' do
   screen = Screen.find_by_id(params[:screen_id])
   puts "Found screen #{screen.inspect}"
-  erb params[:module].to_sym, views: 'lib/screen_modules', locals: {screen: screen} 
+  erb params[:module].to_sym, layout: true, views: 'lib/screen_modules', locals: {screen: screen} 
 end
