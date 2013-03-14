@@ -22,6 +22,7 @@ class Screen
     self.screen_module = modules.select { |m| m.can_display?(msg) }.first
     self.module_data = screen_module.data(message)
     self.priority = screen_module.priority
+    self.class.screens[self.id] = self
   end
 
   def keep_it?
