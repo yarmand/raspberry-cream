@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'sinatra'
+gem 'thin'
 
 gem 'test-unit'
 gem 'rake'
@@ -7,3 +8,8 @@ gem 'rake'
 # The rerun command restarts the app if your files change
 gem 'rerun'
 gem 'rb-fsevent', '~> 0.9'
+
+gem 'omniauth'
+gem 'omniauth-yammer', git: 'git://github.com/nickcampbell18/omniauth-yammer-dev.git'
+
+gem 'httparty'
