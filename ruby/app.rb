@@ -2,7 +2,8 @@ require 'rubygems'
 require 'bundler'
 require 'yaml'
 
-require './lib/yammer_poller'
+$LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/lib"))
+require 'yammer_poller'
 Bundler.require
 
 configure do

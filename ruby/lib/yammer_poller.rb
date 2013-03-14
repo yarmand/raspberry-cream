@@ -1,4 +1,6 @@
 require 'pp'
+require 'scheduler'
+
 class YammerPoller
   POLL_INTERVAL = 20 # seconds
 
@@ -25,8 +27,10 @@ class YammerPoller
       if response.code == 200
         json = response.parsed_response
         messages = json['messages']
-        messages.each { |msg| puts "#{msg['id']} => #{msg['body']['plain']}" }
-        pp json
+        messages.each do |msg|
+          puts "#{msg['id']} => #{msg['body']['plain']}"
+        end
+        #pp json
 
         # Remember where we got to, so that we can fetch only new messages.
         if messages.first

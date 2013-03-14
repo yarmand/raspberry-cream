@@ -6,11 +6,9 @@ class Scheduler
 
   attr_accessor :browser_adapter, :screen_list
 
-/*
- * config: is a hach containing 
- *         - messages_list_size = 10
- *         - message_display_delai = {normal: 20, priority: 40}
- */
+  # config: is a hach containing 
+  #         - messages_list_size = 10
+  #         - message_display_delai = {normal: 20, priority: 40}
   def initialize(config)
     self.screen_list = ScreenList.new(config[messages_list_size])
   end
