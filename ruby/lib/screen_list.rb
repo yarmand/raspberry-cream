@@ -21,6 +21,7 @@ class ScreenList
       return if list.size <= @max_size
       unless screen.keep_it?
         list.delete screen
+        screen.delete
       end
     end
   end
