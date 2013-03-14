@@ -38,17 +38,24 @@ class YammerPoller
   def poll
     raise "Not Authorised" unless authorised?
     loop do 
-      limit = @last_msg_id ? "newer_than=#@last_msg_id" : "limit=10"
-      response = HTTParty.get("https://www.yammer.com/api/v1/messages/following.json?access_token=#{@auth_token}&#{limit}")
+      limit = @last_msg_id ? "newer_than=#@last_msg_id" : "limit=2"
+      response = HTTParty.get("https://www.yammer.com/api/v1/messages/following.json?access_token=#{@auth_token}&threaded=extended&#{limit}")
 
       if response.code == 200
         json = response.parsed_response
         messages = json['messages']
+        threaded = json['threaded_extended']
+        puts "Threaded messages #{threaded.keys.inspect}"
         messages.each do |msg|
-          puts "#{msg['id']} => #{msg['body']['plain']}"
-          screen = Screen.new(msg, @modules)
+          puts "#{msg['id'].inspect} => #{msg['body']['plain']}"
+          responses = threaded[msg['id'].to_s].map do |response|
+            puts "  #{response['id']} => #{response['body']['plain']}"
+            response
+          end.reverse # Put newest last in the array
+          screen = Screen.new({msg: msg, responses: responses}, @modules)
           @scheduler.add_screen(screen)
         end
+
         #pp json
 
         # Remember where we got to, so that we can fetch only new messages.
