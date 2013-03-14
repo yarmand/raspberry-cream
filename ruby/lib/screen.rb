@@ -25,12 +25,12 @@ class Screen
   end
 
   def keep_it?
-    return false unless priority <= PRIORITIES[:normal]
+    return false unless PRIORITIES[priority] <= PRIORITIES[:normal]
     ! screen_module.expire?(message: message, data: module_data)
   end
 
   def display_path
-    "/display/#{id}"
+    "/display/#{screen_module.template}/#{id}"
   end
 
   def delete
@@ -38,7 +38,7 @@ class Screen
   end
 
   def display
-    screen_module.display(message: message, data: module_data)
+    screen_module.display(message, module_data)
   end
 end
 

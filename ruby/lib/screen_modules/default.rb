@@ -1,24 +1,28 @@
 class Default
   class << self
-  def can_display?(message)
-    true 
-  end
+    def can_display?(message)
+      true 
+    end
 
-  def display(message: nil, data: nil)
-    message['body']['plain']
-  end
+    def display(message, data)
+      message['body']['plain']
+    end
 
-  def data(message)
-    nil
-  end
+    def data(message)
+      nil
+    end
 
-  def priority
-    Screen::PRIORITIES[:normal]
-  end
+    def priority
+      :normal
+    end
 
-  def expire?
-    true
-  end
+    def expire?
+      true
+    end
 
-end
+    def template
+      self.name.downcase
+    end
+
+  end
 end

@@ -1,3 +1,4 @@
 ruby/config/keys.yml
 ruby/.bin/
 ruby/.bundle/
+ruby/token

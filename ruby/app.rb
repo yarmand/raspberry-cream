@@ -19,7 +19,8 @@ configure do
     provider :yammer, settings.client_id, settings.client_secret
   end
 
-  scheduler = Scheduler.new#.start
+  scheduler = Scheduler.new
+  scheduler.start
 
   poller = YammerPoller.new(scheduler)
   if poller.authorised?
