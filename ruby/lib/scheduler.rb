@@ -21,11 +21,15 @@ class Scheduler
   def add_screen(screen)
     screen_list.add(screen)
   end
+  
+  def next_screen
+    screen_list.next
+  end
 
   def start
     Thread.new do
       loop do
-        next_screen
+        current = next_screen
         unless current.nil?
           screen = current.screen
           browser_adapter.display screen.display_path
