@@ -48,10 +48,16 @@ class YammerPoller
         puts "Threaded messages #{threaded.keys.inspect}"
         messages.each do |msg|
           puts "#{msg['id'].inspect} => #{msg['body']['plain']}"
-          responses = threaded[msg['id'].to_s].map do |response|
-            puts "  #{response['id']} => #{response['body']['plain']}"
-            response
-          end.reverse # Put newest last in the array
+          responses = threaded[msg['id'].to_s]
+
+          if responses
+            responses.map do |response|
+              puts "  #{response['id']} => #{response['body']['plain']}"
+              response
+            end
+            responses.reverse # Put newest last in the array
+          end
+
           screen = Screen.new({msg: msg, responses: responses}, @modules)
           @scheduler.add_screen(screen)
         end
