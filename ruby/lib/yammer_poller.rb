@@ -26,13 +26,18 @@ class YammerPoller
   end
 
   def load_modules_from_disk
-    Dir.glob(MODULES_DIR + "/*.rb").map do |file|
+    modules = Dir.glob(MODULES_DIR + "/*.rb").map do |file|
       puts file
       
       puts File.basename(file, '.rb')
       require "screen_modules/#{File.basename(file, '.rb')}"
-      Module.const_get(File.basename(file, '.rb').capitalize)
+      Module.const_get(File.basename(file, '.rb').split('_').map(&:capitalize).join)
     end
+
+    # Move the default module to the end of the list.
+    default_module = modules.delete(Default)
+    raise "No 'Default' module" unless default_module
+    modules << default_module
   end
 
   def poll
@@ -48,10 +53,16 @@ class YammerPoller
         puts "Threaded messages #{threaded.keys.inspect}"
         messages.each do |msg|
           puts "#{msg['id'].inspect} => #{msg['body']['plain']}"
-          responses = threaded[msg['id'].to_s].map do |response|
-            puts "  #{response['id']} => #{response['body']['plain']}"
-            response
-          end.reverse # Put newest last in the array
+          responses = threaded[msg['id'].to_s]
+
+          if responses
+            responses.map do |response|
+              puts "  #{response['id']} => #{response['body']['plain']}"
+              response
+            end
+            responses.reverse # Put newest last in the array
+          end
+
           screen = Screen.new({msg: msg, responses: responses}, @modules)
           @scheduler.add_screen(screen)
         end
