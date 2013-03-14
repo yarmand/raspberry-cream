@@ -5,7 +5,7 @@ class ScreenModules::Default
   end
 
   def display(message: nil, data: nil)
-    message['body']
+    message['body']['plain']
   end
 
   def data(message)
