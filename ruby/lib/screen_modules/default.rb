@@ -16,7 +16,7 @@ class Default
       :normal
     end
 
-    def expire?
+    def expire?(message)
       true
     end
 
