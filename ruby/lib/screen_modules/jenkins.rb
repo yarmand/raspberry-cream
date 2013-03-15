@@ -3,17 +3,17 @@ require 'default'
 class Jenkins < Default
   class << self
     def can_display?(message)
-      return true if message['body']['plain'] =~ /jenkins.int.yammer.com/ 
+      return true if plain(message) =~ /jenkins.int.yammer.com/ 
       false
     end
 
     def display(message, data)
-      message['body']['plain']
+      plain(message)
     end
 
     def data(message)
       r=%r{http://jenkins.int.yammer.com/([^ ]*)}
-      p=r.match(message['body']['plain'])[1]
+      p=r.match(plain(message))[1]
       json=get "http://jenkins.int.yammer.com/#{p}/api/json"
       result = json['result']
       details = json['actions'][6]
@@ -21,16 +21,9 @@ class Jenkins < Default
       {:result => result, :details => details, :id => id}
     end
 
-    def priority
-      :normal
+    def plain(message)
+      message['reponses'].last['body']['plain']
     end
 
-    def expire?(message)
-      true
-    end
-
-    def template
-      self.name.downcase
-    end
   end
 end
