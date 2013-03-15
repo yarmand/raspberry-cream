@@ -2,7 +2,7 @@ require 'pp'
 require 'scheduler'
 
 class YammerPoller
-  POLL_INTERVAL = 20 # seconds
+  POLL_INTERVAL = 40 # seconds
   MODULES_DIR = 'lib/screen_modules'
 
   def initialize(scheduler)

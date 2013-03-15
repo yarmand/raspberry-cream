@@ -1,4 +1,3 @@
-
 class Screen
   attr_accessor :id,:message, :screen_module, :module_data, :priority
 
@@ -31,7 +30,13 @@ class Screen
   end
 
   def display_path
-    "/display/#{screen_module.template}/#{id}"
+    if screen_module.respond_to?(:url) &&
+       (url = screen_module.url(message))
+      puts "Displaying URL #{url}"
+      url
+    else
+      "/display/#{screen_module.template}/#{id}"
+    end
   end
 
   def delete
