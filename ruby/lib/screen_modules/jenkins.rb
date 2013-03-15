@@ -17,7 +17,7 @@ class Jenkins < Default
       json=get "http://jenkins.int.yammer.com/#{p}/api/json"
       result = json['result']
       details = json['actions'][6]
-      id = json['number']
+      id = json['fullDisplayName']
       {:result => result, :details => details, :id => id}
     end
 
