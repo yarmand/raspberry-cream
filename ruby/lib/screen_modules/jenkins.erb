@@ -1,12 +1,52 @@
 <% text = screen.display %>
 <% jenkins_info = screen.module_data || {} %>
 <% details = jenkins_info[:details] || {} %>
-<div class='big <%= jenkins_info[:result] %>'>
-  <%= jenkins_info[:id] %>
-  <%= jenkins_info[:result] %>
-</div>
 
-<div>
-  <%= details['failCount'] %>
+<script>
+  var result = "<%= jenkins_info[:result] %>";
+  
+  if(result === "FAILURE"){
+    $("body").addClass("red");
+  } else {
+    $("body").addClass("green");
+  }
+</script>
+
+<style>
+  body.red {
+    background-color: red;
+  }
+
+  body.green {
+    background-color: green;
+  }
+
+  body.green #failures {
+    display: none;
+  } 
+
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  h1 {
+    font-size: 150px;
+    color:white;
+    line-height: 2;
+  } 
+
+  h2 {
+    font-size: 100px;
+    color:white;
+    line-height: 2;
+  } 
+
+</style>
+
+<div style="margin-top:100px;text-align:center">
+  <h1>Jenkins</h1>
+  <h2><%= jenkins_info[:id] %></h2>
+  <h2 id="failures"><%= details['failCount'] %> Failures</h2>
 </div>
 

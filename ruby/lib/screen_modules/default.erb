@@ -12,6 +12,12 @@
   height: 64px;
 }
 
+.post
+{
+  font-size: 200%;
+  line-height:120%;
+}
+
 body {
   zoom: 150%;
 }
@@ -51,7 +57,7 @@ end
         %>
         <li class="media">
           <a class="pull-left" href="#">
-            <img class="media-object" src="<%= rsp_sender['mugshot_url'].gsub('48x48', '96x96') %>">
+            <img class="media-object" src="<%= rsp_sender['mugshot_url'] %>">
           </a>
           <div class="media-body">
             <h2 class="media-heading"><%= rsp_sender['full_name'] %></h2>
