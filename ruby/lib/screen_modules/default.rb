@@ -1,4 +1,9 @@
+
+require 'httparty'
+
 class Default
+  include HTTParty
+
   class << self
     def can_display?(message)
       true 
