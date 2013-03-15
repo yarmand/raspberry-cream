@@ -35,7 +35,7 @@ class Screen
       puts "Displaying URL #{url}"
       url
     else
-      "/display/#{screen_module.template}/#{id}"
+      "http://localhost:4567/display/#{screen_module.template}/#{id}"
     end
   end
 

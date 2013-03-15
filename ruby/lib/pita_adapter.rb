@@ -6,7 +6,7 @@ class PitaAdapter
     params = {'url' => url}
     puts "########## DISPLAY #{url} ############"
     begin
-      Net::HTTP.post_form(URI.parse('http://localhost:8000/browse/url'), params)
+      Net::HTTP.post_form(URI.parse('http://localhost:8000/browser/url'), params)
     rescue
       # ignore failure
     end
