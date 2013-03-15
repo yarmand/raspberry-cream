@@ -17,46 +17,54 @@ body {
 }
 </style>
 
+<%
+
+msg = screen.message[:msg]
+responses = screen.message[:responses]
+all_data = screen.message[:all_data]
+msg_sender = all_data['references'].find do |ref|
+  ref['id'] == msg['sender_id']
+end
+
+%>
+
 <ul class="media-list">
   <li class="media">
     <a class="pull-left" href="#">
-      <img class="media-object" src="https://mug0.assets-yammer.com/mugshot/images/128x128/5kww4CCfTB3Q3vNj6wLwRh5R78jq5fn3">
+      <img class="media-object" src="<%= msg_sender['mugshot_url'].gsub('48x48', '128x128') %>">
     </a>
     <div class="media-body">
-      <h2 class="media-heading">Yann Armand</h2>
+      <h2 class="media-heading"><%= msg_sender['full_name'] %></h2>
   
       <!-- Nested media object -->
       <div class="media post">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar est id quam tristique pulvinar. Aliquam eros ante, ultricies eget faucibus nec, elementum ut leo. Nullam eget turpis ipsum. Aliquam mi orci, suscipit vel consequat et, egestas nec sem. Nulla ac mi magna. Proin mollis magna vitae felis ultricies pretium. Donec aliquam volutpat enim, a commodo lacus bibendum id.<br>
+        <%= msg['body']['plain'] %>
+        <br>
       </div>
-      <ul class="media-list">
+      <% unless responses.empty? %>
+        <ul class="media-list">
+          <% 
+            responses.each do |response| 
+              rsp_sender = all_data['references'].find do |ref|
+              ref['id'] == response['sender_id']
+            end
+        %>
         <li class="media">
           <a class="pull-left" href="#">
-            <img class="media-object" src="https://mug0.assets-yammer.com/mugshot/images/64x64/5kww4CCfTB3Q3vNj6wLwRh5R78jq5fn3">
+            <img class="media-object" src="<%= rsp_sender['mugshot_url'] %>">
           </a>
           <div class="media-body">
-            <h2 class="media-heading">Yann Armand</h2>
+            <h2 class="media-heading"><%= rsp_sender['full_name'] %></h2>
         
             <!-- Nested media object -->
             <div class="media post">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar est id quam tristique pulvinar. Aliquam eros ante, ultricies eget faucibus nec, elementum ut leo. Nullam eget turpis ipsum. Aliquam mi orci, suscipit vel consequat et, egestas nec sem. Nulla ac mi magna. Proin mollis magna vitae felis ultricies pretium. Donec aliquam volutpat enim, a commodo lacus bibendum id.<br>
+              <%= response['body']['plain'] %><br>
             </div>
           </div>
-        </li>
-        <li class="media">
-          <a class="pull-left" href="#">
-            <img class="media-object" src="https://mug0.assets-yammer.com/mugshot/images/64x64/5kww4CCfTB3Q3vNj6wLwRh5R78jq5fn3">
-          </a>
-          <div class="media-body">
-            <h2 class="media-heading">Yann Armand</h2>
-        
-            <!-- Nested media object -->
-            <div class="media post">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar est id quam tristique pulvinar. Aliquam eros ante, ultricies eget faucibus nec, elementum ut leo. Nullam eget turpis ipsum. Aliquam mi orci, suscipit vel consequat et, egestas nec sem. Nulla ac mi magna. Proin mollis magna vitae felis ultricies pretium. Donec aliquam volutpat enim, a commodo lacus bibendum id.<br>
-            </div>
-          </div>
-        </li>
+          </li>
+        <% end %>
       </ul>
+    <% end %>
     </div>
   </li>
 </ul>

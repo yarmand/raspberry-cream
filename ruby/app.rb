@@ -13,6 +13,8 @@ configure do
   key_config = YAML::load_file('config/keys.yml')
   set :client_id, key_config['client_id']
   set :client_secret, key_config['client_secret']
+
+  # Turn off X-Frame-Options header
   set :protection, :except => :frame_options
 
   use Rack::Session::Cookie

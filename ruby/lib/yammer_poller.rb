@@ -48,6 +48,9 @@ class YammerPoller
 
       if response.code == 200
         json = response.parsed_response
+        puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
+        pp json
+        puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
         messages = json['messages']
         threaded = json['threaded_extended']
         puts "Threaded messages #{threaded.keys.inspect}"
@@ -63,7 +66,7 @@ class YammerPoller
             responses.reverse # Put newest last in the array
           end
 
-          screen = Screen.new({msg: msg, responses: (responses || [])}, @modules)
+          screen = Screen.new({msg: msg, responses: (responses || []), all_data: json}, @modules)
           @scheduler.add_screen(screen)
         end
 
