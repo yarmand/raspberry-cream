@@ -43,7 +43,7 @@ class YammerPoller
   def poll
     raise "Not Authorised" unless authorised?
     loop do 
-      limit = @last_msg_id ? "newer_than=#@last_msg_id" : "limit=2"
+      limit = @last_msg_id ? "newer_than=#@last_msg_id" : "limit=5"
       response = HTTParty.get("https://www.yammer.com/api/v1/messages/following.json?access_token=#{@auth_token}&threaded=extended&#{limit}")
 
       if response.code == 200
