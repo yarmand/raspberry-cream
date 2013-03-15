@@ -1,0 +1,46 @@
+<style>
+.post {
+  margin-bottom: 20px;
+}
+.big_image {
+  width: 128px;
+  height: 128px;
+}
+
+.small_image {
+  width: 64px;
+  height: 64px;
+}
+
+.shat
+{
+  position: absolute;
+  left: 250px;
+  top: 300px;
+  font-size: 400%;
+  text-decoration: blink;
+  color: red;
+  font-weight: bold;
+}
+
+body {
+}
+</style>
+
+<%
+
+msg = screen.message[:msg]
+responses = screen.message[:responses]
+all_data = screen.message[:all_data]
+mugshot_url = screen.module_data[:mugshot_url]
+
+%>
+      <div class="post">
+        <%= msg['body']['plain'] %>
+      </div>
+    <br>
+    <div class='shat'>!!! SHAMEHAT!!!</div>
+    <a class="image" href="#">
+      <img class="media-object" src="<%= mugshot_url %>">
+    </a>
+

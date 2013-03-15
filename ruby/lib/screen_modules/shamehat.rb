@@ -18,14 +18,14 @@ class Shamehat < Default
       msg_sender = all_data['references'].find do |ref|
         ref['id'] == msg['sender_id']
       end
-
+      mugshot=msg_sender['mugshot_url'].gsub('48x48', '500x500')
       puts ":::::::::::::"
       #pp all_data
-      pp msg_sender['mugshot_url'].gsub('48x48', '800x800')
+      pp mugshot
       puts ":::::::::::::"
 
 
-      #{:result => result, :details => details, :id => id}
+      {:mugshot_url => mugshot}
     end
 
     def plain(message)
