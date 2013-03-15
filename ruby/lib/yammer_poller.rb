@@ -48,9 +48,9 @@ class YammerPoller
 
       if response.code == 200
         json = response.parsed_response
-        puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
-        pp json
-        puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
+        # puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
+        # pp json
+        # puts "@@@@@@@@@@@@@@@@@@@@@@@@@"
         messages = json['messages']
         threaded = json['threaded_extended']
         puts "Threaded messages #{threaded.keys.inspect}"
