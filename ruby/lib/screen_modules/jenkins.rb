@@ -30,7 +30,7 @@ class Jenkins < Default
       m['body']['plain']
     end
 
-    def expire?
+    def expire?(message)
       false
     end
   end
