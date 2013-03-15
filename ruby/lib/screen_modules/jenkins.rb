@@ -1,4 +1,4 @@
-require 'default'
+require 'screen_modules/default'
 
 class Jenkins < Default
   class << self
@@ -12,7 +12,7 @@ class Jenkins < Default
     end
 
     def data(message)
-      r=%r{http://jenkins.int.yammer.com/([^ ]*)}
+      r=%r{jenkins.int.yammer.com/([^ ]*)}
       p=r.match(plain(message))[1]
       json=get "http://jenkins.int.yammer.com/#{p}/api/json"
       result = json['result']
@@ -22,8 +22,16 @@ class Jenkins < Default
     end
 
     def plain(message)
-      message['reponses'].last['body']['plain']
+      if message[:responses].empty?
+        m=message[:msg]
+      else
+        m=message[:responses].last
+      end
+      m['body']['plain']
     end
 
+    def expire?
+      false
+    end
   end
 end

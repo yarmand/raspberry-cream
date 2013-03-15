@@ -63,7 +63,7 @@ class YammerPoller
             responses.reverse # Put newest last in the array
           end
 
-          screen = Screen.new({msg: msg, responses: responses}, @modules)
+          screen = Screen.new({msg: msg, responses: (responses || [])}, @modules)
           @scheduler.add_screen(screen)
         end
 

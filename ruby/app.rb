@@ -51,3 +51,11 @@ get '/display/:module/:screen_id' do
   puts "Found screen #{screen.inspect}"
   erb params[:module].to_sym, layout: true, views: 'lib/screen_modules', locals: {screen: screen} 
 end
+
+get 'display/jenkins/12345' do
+  m = { 'body' => { 'plain' => 'Build Results - MASTER #7060 FAILURE http://jenkins.int.yammer.com/job/MASTER/7059/ Last successful build was: MASTER #7055'} }
+  mm = {msg: m, responses: [m,m]}
+  s=Screen.new(mm,[Jenkins])
+  erb :jenkins, layout: true, views: 'lib/screen_modules', locals: {screen: s} 
+end
+
