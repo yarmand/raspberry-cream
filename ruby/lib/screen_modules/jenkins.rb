@@ -12,7 +12,7 @@ class Jenkins < Default
     end
 
     def data(message)
-      r=%r{jenkins.int.yammer.com/([^ ]*)}
+      r=%r{jenkins.int.yammer.com/([^\s]*)}
       p=r.match(plain(message))[1]
       json=get "http://jenkins.int.yammer.com/#{p}/api/json"
       result = json['result']
