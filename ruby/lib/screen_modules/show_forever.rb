@@ -23,7 +23,7 @@ class ShowForever
     end
     
     def url(message)
-      if /(http:\/\/\W*)/.match(message[:msg]['body']['plain'])
+      if /(http:\/\/\S*)/.match(message[:msg]['body']['plain'])
         puts "Got URL #{$1}"
         $1
       else
