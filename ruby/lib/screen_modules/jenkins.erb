@@ -1,15 +1,9 @@
 <% text = screen.display %>
-<% jenkins_info = screen.module_data %>
-<% details = jenkins_info['details'] %>
-<style>
-body {
-  zoom: 150%;
-}
-</style>
-
-<div class='big <%= jenkins_info['result'] %>'>
-  <%= jenkins_info['id'] %>
-  <%= jenkins_info['result'] %>
+<% jenkins_info = screen.module_data || {} %>
+<% details = jenkins_info[:details] || {} %>
+<div class='big <%= jenkins_info[:result] %>'>
+  <%= jenkins_info[:id] %>
+  <%= jenkins_info[:result] %>
 </div>
 
 <div>
