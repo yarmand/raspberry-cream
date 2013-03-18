@@ -1,0 +1,38 @@
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+
+<body>
+<div class="container" style="padding-top: 20px">
+  <div class="row-fluid"> 
+    <h2>URL</h2>
+  </div>
+  <div class="row-fluid"> 
+    <div class="span12">
+      <input id="ta_url" type="text" class="input-medium search-query span10">
+      <button type="submit" class="btn" id="send_url">Go to</button>
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  var sendUrl = function(){
+    var url = $("#ta_url").val();
+
+    $.ajax({
+      url: '/browser/url',
+      type: 'PUT',
+      data: {
+        url: url
+      }
+    });
+  }
+
+  $("#send_url").on('click', sendUrl);
+  $('#ta_url').keydown(function (e) {
+    if (e.which == 13) {
+      sendUrl();
+    }
+  });
+</script>

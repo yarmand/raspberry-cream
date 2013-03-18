@@ -1,0 +1,108 @@
+<style>
+  iframe {
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    width:100%;
+    height:100%;
+    display:none;
+    z-index: 1;
+  }
+
+  #statusbar {
+    z-index: 2;
+    position: absolute;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 25px;
+    background-color: black;
+    
+  }
+
+  #statusbar div {
+    display: inline;
+    font-family: monospace;
+    color: white;
+    font-size: 15px;
+    margin: 3px;
+    line-height: 1.5;
+  }
+
+  #ip {
+    float: right;
+  }
+</style>
+<body style="padding:0px;margin:0px">
+  <iframe id="layer1" frameborder="no"></iframe>
+  <iframe id="layer2" frameborder="no"></iframe>
+  <div id="statusbar">
+    <div id="status"></div>
+    <div id="ip"</div>
+  </div>
+</body>
+
+<script src="http://code.jquery.com/jquery-2.0.0b1.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  var socket;
+  var reconnectInterval = null;
+
+  function connect(){
+    socket = io.connect();
+    socket.on('url', function (url) {
+      showContent(url);
+    });
+
+    socket.on('connect', function () {
+      if(reconnectInterval){
+        window.location = window.location;
+      }
+    })
+
+    socket.on('disconnect', function () {
+      reconnectInterval = setInterval(function(){
+        connect();
+      }, 10000);
+    });
+  }
+
+  var getIpAddress = function(){
+    $.get('/ip', function(ip){
+      $("#ip").text(ip);
+    });  
+  };
+  getIpAddress();
+  setInterval(getIpAddress, 10000);
+  
+  var $layer1 = $('#layer1');
+  var $layer2 = $('#layer2');
+  var $currentLayer = $layer1;
+  var $hiddenLayer = $layer2;
+  var $status = $('#status');
+
+  function showContent(url){
+    $hiddenLayer.one('load', function(){
+      $currentLayer.hide();
+      $hiddenLayer.show();
+
+      var current = $currentLayer;
+      var hidden = $hiddenLayer;
+
+      $currentLayer = hidden;
+      $hiddenLayer = current;
+
+      current.attr('src', 'about:blank');
+      $status.text(url);
+    });
+
+    $hiddenLayer.attr('src', url);
+    $status.text("loading " + url + "...");
+  }
+
+  connect();
+</script>
